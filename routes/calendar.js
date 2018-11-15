@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-/* GET home page. */
+/* GET calendar */
 router.get("/", (req, res, next) => {
-  res.render("index", { title: "Hello, Henry. What can I do for you today?" });
+  res.render("calendar", {});
 });
 
 module.exports = router;
