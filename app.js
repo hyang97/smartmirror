@@ -6,6 +6,7 @@ const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
+const weatherRouter = require("./routes/weather");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/$", smartMirror);
 app.use("/", indexRouter);
 app.use("/calendar", calendarRouter);
+app.use("/weather", weatherRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
