@@ -11,12 +11,13 @@ const API_KEY = "5de0956332b3fe9c5acd614b069e03e1";
 router.get("/", (req, res, next) => {
   publicIP.v4().then(ip => {
     const city = geoip.lookup(ip).city;
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${API_KEY}`;
-    request(url, (err, response, body) => {
+    const url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${API_KEY}`;
+    request(url, (err, response, data) => {
       if (err) {
         res.render("error", { message: err });
       } else {
-        res.render("weather", { weatherData: JSON.parse(body), city });
+        res.render("weather", { weatherData: JSON.parse(data), city });
+        console.log(JSON.parse(data).list[0]);
       }
     });
   });
