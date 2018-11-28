@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const WebSocketServer = require("ws").Server;
 
 const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
@@ -11,6 +12,7 @@ const weatherRouter = require("./routes/weather");
 const app = express();
 
 const smartMirror = require("./middleware/smartMirror");
+const SOCKET_PORT = 40510;
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -41,6 +43,14 @@ app.use((err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+// Set up web socket connection
+const wss = new WebSocketServer({ port: SOCKET_PORT });
+wss.on("connection", function(ws) {
+  ws.on("message", function(message) {
+    console.log("received: %s", message);
+  });
 });
 
 module.exports = app;
