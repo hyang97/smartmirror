@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const geoip = require("geoip-lite");
+const iplocation = require("iplocation").default;
 const publicIP = require("public-ip");
 const request = require("request");
 
@@ -10,16 +10,36 @@ const API_KEY = "5de0956332b3fe9c5acd614b069e03e1";
 /* GET weather */
 router.get("/", (req, res, next) => {
   publicIP.v4().then(ip => {
-    const city = geoip.lookup(ip).city;
-    const url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${API_KEY}`;
-    request(url, (err, response, data) => {
-      if (err) {
-        res.render("error", { message: err });
-      } else {
-        res.render("weather", { weatherData: JSON.parse(data), city });
-        console.log(JSON.parse(data).list[0]);
-      }
+    iplocation(ip, [], (error, loc) => {
+      const { city } = loc;
+      const url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${API_KEY}`;
+      request(url, (err, response, data) => {
+        if (err) {
+          res.render("error", { message: err });
+        } else {
+          res.render("weather", { weatherData: JSON.parse(data), city });
+          console.log(JSON.parse(data).list[0]);
+        }
+      });
     });
+    /* res:
+          {
+              as: 'AS11286 KeyBank National Association',
+              city: 'Cleveland',
+              country: 'United States',
+              countryCode: 'US',
+              isp: 'KeyBank National Association',
+              lat: 41.4875,
+              lon: -81.6724,
+              org: 'KeyBank National Association',
+              query: '156.77.54.32',
+              region: 'OH',
+              regionName: 'Ohio',
+              status: 'success',
+              timezone: 'America/New_York',
+              zip: '44115'
+          }
+      */
   });
 });
 
