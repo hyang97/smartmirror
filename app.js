@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const WebSocketServer = require("ws").server;
+const WebSocketServer = require("ws").Server;
 
 const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
