@@ -12,7 +12,7 @@ const weatherRouter = require("./routes/weather");
 const app = express();
 
 const smartMirror = require("./middleware/smartMirror");
-const SOCKET_PORT = 40510;
+const WEB_SOCKET_PORT = require("./config");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -46,7 +46,7 @@ app.use((err, req, res, next) => {
 });
 
 // Set up web socket connection
-const wss = new WebSocketServer({ port: SOCKET_PORT });
+const wss = new WebSocketServer({ port: WEB_SOCKET_PORT });
 wss.on("connection", function(ws) {
   ws.on("message", function(message) {
     console.log("received: %s", message);
