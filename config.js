@@ -1,3 +1,3 @@
 const WEB_SOCKET_PORT = 40510;
 
-export { WEB_SOCKET_PORT };
+module.exports = { WEB_SOCKET_PORT };

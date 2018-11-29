@@ -13,7 +13,7 @@ const { spawn } = require("child_process");
 const app = express();
 
 const smartMirror = require("./middleware/smartMirror");
-const WEB_SOCKET_PORT = require("./config");
+const { WEB_SOCKET_PORT } = require("./config");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
