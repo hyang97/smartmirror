@@ -8,6 +8,7 @@ const WebSocketServer = require("ws").Server;
 const indexRouter = require("./routes/index");
 const calendarRouter = require("./routes/calendar");
 const weatherRouter = require("./routes/weather");
+const { spawn } = require("child_process");
 
 const app = express();
 
@@ -47,10 +48,33 @@ app.use((err, req, res, next) => {
 
 // Set up web socket connection
 const wss = new WebSocketServer({ port: WEB_SOCKET_PORT });
+let ws_client;
 wss.on("connection", function(ws) {
+  ws_client = ws;
   ws.on("message", function(message) {
     console.log("received: %s", message);
   });
+});
+
+const child = spawn("python3", [
+  // "assistant/examples/voice/assistant_grpc_demo.py"
+  "/home/pi/AIY-projects-python/src/examples/voice/test_grpc.py"
+]);
+
+console.log("spawned assistant");
+
+child.on("error", err => {
+  console.log("Failed to spawn process");
+});
+
+child.on("close", code => {
+  console.log("Process exited with code " + code);
+});
+
+child.stdout.on("data", async function(chunk) {
+  let textChunk = chunk.toString("utf-8"); //buffer to string
+  console.log(textChunk);
+  ws_client.send(textChunk);
 });
 
 module.exports = app;
