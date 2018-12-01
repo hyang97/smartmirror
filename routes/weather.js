@@ -18,7 +18,6 @@ router.get("/", (req, res, next) => {
           res.render("error", { message: err });
         } else {
           res.render("weather", { weatherData: JSON.parse(data), city });
-          console.log(JSON.parse(data).list[0]);
         }
       });
     });
