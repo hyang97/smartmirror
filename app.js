@@ -33,8 +33,6 @@ wss.on("connection", function(ws) {
     ws_client.terminate();
   }
   ws_client = ws;
-  console.log("new client. sending them hello");
-  ws_client.send("hello");
   ws.on("message", function(message) {
     console.log("received: %s", message);
   });
