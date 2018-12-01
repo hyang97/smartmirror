@@ -10,5 +10,18 @@
   <body>
     <h1>Smart Mirror</h1>
     <p><%= title %></p>
+    <script>
+      const SOCKET_PORT = 40510;
+
+      var ws = new WebSocket(`ws://localhost:${SOCKET_PORT}`);
+      ws.onopen = function () {
+          console.log('websocket is connected')
+          ws.send('connected')
+      }
+      //Receive message from server
+      ws.onmessage = function (ev) {
+          console.log(ev);
+      }
+    </script>
   </body>
 </html>
