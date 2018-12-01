@@ -74,12 +74,14 @@ child.on("close", code => {
 
 child.stdout.on("data", async function(chunk) {
   let textChunk = chunk.toString("utf-8"); //buffer to string
-  console.log(textChunk);
+  // console.log(textChunk);
   for (let i = 0; i < KEYWORDS.length; i++) {
     // Send first encountered keyword
     const word = KEYWORDS[i];
     if (textChunk.includes(word)) {
-      console.log("match");
+      if (ws_client) {
+        ws_client.send(word);
+      }
       break;
     }
   }
