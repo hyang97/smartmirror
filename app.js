@@ -12,8 +12,7 @@ const { spawn } = require("child_process");
 
 const app = express();
 
-const smartMirror = require("./middleware/smartMirror");
-const { WEB_SOCKET_PORT } = require("./config");
+const { WEB_SOCKET_PORT, KEYWORDS } = require("./config");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -25,7 +24,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/$", smartMirror);
+// Set up web socket connection. We
+const wss = new WebSocketServer({ port: WEB_SOCKET_PORT });
+let ws_client;
+wss.on("connection", function(ws) {
+  // Close current connection
+  if (ws_client) {
+    ws_client.terminate();
+  }
+  ws_client = ws;
+  console.log("new client. sending them hello");
+  ws_client.send("hello");
+  ws.on("message", function(message) {
+    console.log("received: %s", message);
+  });
+});
+
 app.use("/", indexRouter);
 app.use("/calendar", calendarRouter);
 app.use("/weather", weatherRouter);
@@ -46,19 +60,8 @@ app.use((err, req, res, next) => {
   res.render("error");
 });
 
-// Set up web socket connection
-const wss = new WebSocketServer({ port: WEB_SOCKET_PORT });
-let ws_client;
-wss.on("connection", function(ws) {
-  ws_client = ws;
-  ws.on("message", function(message) {
-    console.log("received: %s", message);
-  });
-});
-
 const child = spawn("python3", [
-  // "assistant/examples/voice/assistant_grpc_demo.py"
-  "/home/pi/AIY-projects-python/src/examples/voice/test_grpc.py"
+  "/home/pi/AIY-projects-python/src/examples/voice/test_bryan.py"
 ]);
 
 console.log("spawned assistant");
@@ -74,7 +77,14 @@ child.on("close", code => {
 child.stdout.on("data", async function(chunk) {
   let textChunk = chunk.toString("utf-8"); //buffer to string
   console.log(textChunk);
-  ws_client.send(textChunk);
+  for (let i = 0; i < KEYWORDS.length; i++) {
+    // Send first encountered keyword
+    const word = KEYWORDS[i];
+    if (textChunk.includes(word)) {
+      console.log("match");
+      break;
+    }
+  }
 });
 
 module.exports = app;

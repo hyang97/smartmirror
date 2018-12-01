@@ -20,7 +20,9 @@
       ws.send("connected");
     };
     ws.onmessage = function(ev) {
-      console.log(ev);
+      console.log(ev.data);
+      const path = ev.data;
+      window.location.href = "/" + path;
     };
   </script>
 </html>
