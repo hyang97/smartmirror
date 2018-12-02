@@ -13,29 +13,29 @@
     <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; padding: 50px;">
     <div style="display: flex; justify-content: space-between;">
       <div>
-        <p  style="font-family: Avenir Next; font-size: 40px;font-style: bold; color: white;">
+        <p  style="font-family: Avenir Next, sans-serif; font-size: 40px;font-style: bold; color: white;">
             <b> Weather </b>
         </p>
       </div>
       <div style="font-size: 2rem;">
         <!date and time>
-          <p  style="font-family: Avenir Next; color: white;">
+          <p  style="font-family: Avenir Next, sans-serif; color: white;">
               <span id="time"></span>
           </p>
           <script>
               var dt = new Date();
-              document.getElementById("time").innerHTML = dt.toLocaleTimeString();
+              document.getElementById("time").innerHTML = dt.toLocaleTimeString('en-CA');
           </script>
-          <p  style="font-family: Avenir Next-DemiBold, Avenir Next; font-style: bold; color: white;">
+          <p  style="font-family: Avenir Next-DemiBold, Avenir Next, sans-serif; font-style: bold; color: white;">
               <b> <span id="date"></span> </b>
           </p>
     
           <script>
               var dt = new Date();
-              document.getElementById("date").innerHTML = dt.toLocaleDateString();
+              document.getElementById("date").innerHTML = dt.toLocaleDateString('en-CA');
           </script>
         <!suggestion>
-          <p  style="font-family: Avenir Next; color: white; ">
+          <p  style="font-family: Avenir Next, sans-serif; color: white; ">
               Say “view commands” <br/>
               to see what I can do!
           </p>
@@ -44,7 +44,7 @@
 
       <!weather box>
       <div style="min-height: 200px; width: 70%; border: white 1px solid; padding: 20px; box-sizing: border-box;">
-          <h1 style="color: white; font-family: AvenirNext-Bold, Avenir Next; font-weight: bold; font-size: 2rem; margin-bottom: 20px;" > 
+          <h1 style="color: white; font-family: AvenirNext-Bold, Avenir Next, sans-serif; font-weight: bold; font-size: 2rem; margin-bottom: 20px;" > 
               <%= weatherData.list[0].dt_txt.split(' ')[0] %>
           </h1>
           <div id="forecast" style="display: flex; justify-content: space-between; margin-bottom: 25px;">
@@ -52,7 +52,7 @@
               <%if (i > 5) { %>
 
               <% } else { %>
-                <div style="color: white; font-family: Avenir Next; font-size: 1.75rem;">
+                <div style="color: white; font-family: Avenir Next, sans-serif; font-size: 1.75rem;">
                   <div style="margin-bottom: 2px;">
                       <%= parseInt(data.dt_txt.split(' ')[1].split(':')[0]) % 12 == 0 ? 12 : parseInt(data.dt_txt.split(' ')[1].split(':')[0]) % 12 %><%= parseInt(data.dt_txt.split(' ')[1].split(':')[0]) > 12 ? 'pm' : 'am' %>
                   </div>
@@ -63,11 +63,11 @@
               <% }) %>
           </div>
           <div class="line" style="background-color: white; height: 1px; width: 100%; margin-bottom: 20px;"></div>
-          <h1 id="MONDAY-10.28.18" style="color: white; font-family: AvenirNext-Bold, Avenir Next; font-weight: bold; font-size: 2rem; margin-bottom: 0px;" >
+          <h1 id="MONDAY-10.28.18" style="color: white; font-family: AvenirNext-Bold, Avenir Next, sans-serif; font-weight: bold; font-size: 2rem; margin-bottom: 0px;" >
               Description: 
           </h1>
-          <p style="margin-top: 5px; color: white; font-family: Avenir Next; font-size: 2rem; margin-bottom: 30px;" >
-              Swag
+          <p style="margin-top: 5px; color: white; font-family: Avenir Next, sans-serif; font-size: 2rem; margin-bottom: 30px;" >
+              Here's the weather forecast for tomorrow.
           </p>
         </div>
     </div>

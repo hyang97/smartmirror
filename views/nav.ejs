@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calendar</title>
+    </head>
+    <style type="text/css">
+      *{
+        font-family: sans-serif;   
+      }
+      p {
+        margin-top:50px;
+        color: white;
+        text-align: left;
+        margin-left: 4.5rem;
+        font-size: 2rem;
+        font-weight: 40;
+        margin-bottom:3rem;
+      }
+
+      .vertical-line {
+        border-left: .05rem solid white;
+        height: 100%;
+        margin-left:21rem;
+        margin-top:1rem;
+      }
+
+      .box {
+        position: absolute;
+        margin-left:8rem;
+        margin-top:20rem;
+      }
+
+      .column-left {
+        margin-left:2rem;
+        margin-top:1rem;
+        color:white;
+        float:left;
+        width: 40%;
+        font-size:1.5rem;
+        text-align:center;
+      }
+
+      .column-right {
+        color:white;
+        float:right;
+        width:40%;
+        margin-right:2rem;
+        font-size:1.5rem;
+      }
+
+      .options {
+        margin-bottom: 7rem;
+      }
+
+      .descriptions {
+        color:#D5D5D5;
+      }
+    </style>
+    <body style="background-color: black;">
+
+    <div class="box" style="width:44rem;height:55rem;border:.05rem solid #FFFFFF;">
+
+
+    <p>
+      <img src="/images/listening_state.svg"/  style="margin-right:1rem" width=10%>
+      This is what I can do
+    </p>
+
+    <div class="column-left">
+      <div class="options"> "View full calendar" </div>
+      <div class="options"> "Set alarm for [time]" </div>
+      <div class="options"> "View to-do list" </div>
+      <div class="options"> "Motivate me" </div>
+      <div class="options"> "Set new goal" </div>
+    </div>
+    <div class="column-right">
+      <div class="descriptions"> Show a more in depth view of your daily/weekly calendar</div>
+      <div class="descriptions" style="margin-top:4rem"> Automatically sets an alarm on your mobile device</div>
+      <div class="descriptions" style="margin-top:5rem"> Show a to-do list imported from your mobile device</div>
+      <div class="descriptions" style="margin-top:5rem"> Delivers you a daily delightfully, inspiring quote or affirmation</div>
+      <div class="descriptions" style="margin-top:4rem"> Allows you to set and track personal goals (eg. hydration, reading more)</div>
+    </div>
+
+    <div class="vertical-line" style="height: 43rem;"></div>
+    </div>
+
+
+    </div>
+    </body>
+
+</html>

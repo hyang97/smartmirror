@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="134px" height="75px" viewBox="0 0 134 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>equalizer icon</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="listening-state" transform="translate(-215.000000, -464.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="equalizer-icon" transform="translate(215.000000, 464.000000)">
+                <rect id="Rectangle" x="18" y="23" width="8" height="30"></rect>
+                <rect id="Rectangle" x="108" y="15" width="8" height="46"></rect>
+                <rect id="Rectangle" x="36" y="6" width="8" height="64"></rect>
+                <rect id="Rectangle" x="54" y="13" width="8" height="49"></rect>
+                <rect id="Rectangle" x="72" y="0" width="8" height="75"></rect>
+                <rect id="Rectangle" x="90" y="17" width="8" height="41"></rect>
+                <rect id="Rectangle" x="126" y="28" width="8" height="19"></rect>
+                <rect id="Rectangle" x="0" y="28" width="8" height="19"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
