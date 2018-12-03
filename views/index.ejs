@@ -8,8 +8,9 @@
 <!--     <link rel="stylesheet" href="/stylesheets/style.css" /> -->
     <style type="text/css">
 	   :root {
-		--md-txt: 20px;
-		--sm-txt: 15px;
+	   	--lg-txt: 50px;
+		--md-txt: 25px;
+		--sm-txt: 20px;
 	  }
 
 	  body {
@@ -34,7 +35,7 @@
       	flex: 1;
       	padding: 50px 60px;
       }
-      #time {font-size: 35px;}
+      #time {font-size: var(--lg-txt)}
       #date span {
       	font-size: var(--md-txt);
       	font-weight: bold;
@@ -43,7 +44,7 @@
       	font-size: var(--md-txt);
       	margin-top: 20px;
       }
-	  #title {font-size: 40px;}
+	  #title {font-size: var(--lg-txt)}
 	  .info p, .todo-box p {
 	  	margin-bottom: 5px;
 	  }
