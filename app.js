@@ -33,15 +33,29 @@ child.on("close", code => {
 
 child.stdout.on("data", async function(chunk) {
   let textChunk = chunk.toString("utf-8"); //buffer to string
+  textChunk = textChunk.toLowerCase();
   console.log(textChunk);
+  
   for (let i = 0; i < KEYWORDS.length; i++) {
     // Send first encountered keyword
-    const word = KEYWORDS[i];
+    const word = KEYWORDS[i].page;
     if (textChunk.includes(word)) {
       if (ws_client) {
         ws_client.send(word);
       }
       break;
+    }
+    else {
+      const words = KEYWORDS[i].keywords;
+      for (let j = 0; j < words.length; j++)  {
+        const word2 = words[j];
+        if (textChunk.includes(word2)) {
+          if (ws_client) {
+            ws_client.send(word);
+          }
+          break;
+        }
+      }
     }
   }
 });
