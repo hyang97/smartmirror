@@ -9,21 +9,56 @@
         <title>Calendar</title>
     </head>
     <style type="text/css">
-      body {
-        background-color: black;
-      }
-      p, li, h1{
+     :root {
+      --lg-txt: 50px;
+    --md-txt: 25px;
+    --sm-txt: 20px;
+    }
+
+    body {
+      background-color: black;
+      margin:0;
+    }
+      p, li, h1, span{
         color: white;
         font-family: sans-serif; 
+        font-weight: 200;
+        margin: 0;
+        line-height: 1.2;
       }
       .content {
         display: flex;
         flex-direction: column; 
-        /*height: 100vh; */
-        padding: 50px;
+        height: 100vh; 
+      }
+      .top {
+        display: flex; 
+        justify-content: space-between; 
+        flex: 1;
+        padding: 50px 60px;
+      }
+      #time {font-size: var(--lg-txt)}
+      #date span {
+        font-size: var(--md-txt);
+        font-weight: bold;
+      }
+      #view-comm {
+        font-size: var(--md-txt);
+        margin-top: 20px;
+      }
+      #title {font-size: var(--lg-txt)}
+      .info p, .todo-box p {
+        margin-bottom: 5px;
+      }
+      .box {
+        border: white 2px solid; 
+          padding: 20px;
+          box-sizing: border-box;
+          border-radius: 4px;
       }
       .calendar {
         /*min-height: 200px; */
+        font-size: var(--md-txt);
         width: 100%; 
         border: white 1px solid; 
         padding: 30px; 
@@ -31,67 +66,64 @@
         border-radius: 4px;
         margin-top: 50px;
       }
-      h1 {
-        font-family: sans-serif; 
-        font-weight: bold; 
-        font-size: 2rem; 
-        margin: 0;
-        margin-bottom: 20px;
-      }
-      #time {
-        font-size: 40px;
-      }
+      .bot {padding: 50px 60px;}
+      .today { margin-bottom: 20px;}
+      .today span {
+        font-weight: bold;
+      }      
       .item {
         list-style: none;
         padding-left: 0;
-        font-size: 1.7rem;
+        font-size: var(--md-txt);
+
+      }
+      .item li {
         line-height: 1.5;
       }
     </style>
 <body>
 <div class="content">
-  <div style="display: flex; justify-content: space-between;">
+  <div class="top">
     <div>
-      <p style="font-size: 40px; margin-top: 32px;">
+      <p id="title">
           <b> Calendar </b>
       </p>
     </div>
-    <div style="font-size: 2rem;">
-        <p>
-            <span id="time"></span>
-        </p>
-        <p  font-style: bold;">
-            <span id="date"></span>
-        </p>
-        <p>
+    <div class="info">
+      <p id="time"></p>
+      <span id="date">
+        <span id="day-short"></span>
+        <span id="date-num"></span>
+      </span>
+      <p id="view-comm"> 
             Say “view commands” <br/>
             to see what I can do!
-        </p>
+      </p>
     </div>
   </div>
-  <div class="calendar">
-    <h1>
-      <span id="day"></span>
-      <span id="header"></span>
-    </h1>
-    <h1> 
-        In 24 hrs:
-    </h1>
-    <ul class="item">
-      <li>10:30 am - 12:00 pm</li>
-      <li><b>Google Interview</b></li>
-      <li>Career Center, Los Angeles, CA 90024</li>
-    </ul>
-    <ul class="item">
-      <li>10:30 am - 12:00 pm</li>
-      <li><b>Google Interview</b></li>
-      <li>Career Center, Los Angeles, CA 90024</li>
-    </ul>
-    <ul class="item">
-      <li>10:30 am - 12:00 pm</li>
-      <li><b>Google Interview</b></li>
-      <li>Career Center, Los Angeles, CA 90024</li>
-    </ul>
+  <div class="bot">
+    <div class="calendar box">
+      <div class="today">
+          <span id="day-long"></span>
+          <span id="header"></span>
+      </div>
+      <div class="today"><p><b>In 24 hrs:</b></p></div>
+      <ul class="item">
+        <li>10:30 am - 12:00 pm</li>
+        <li><b>Google Interview</b></li>
+        <li>Career Center, Los Angeles, CA 90024</li>
+      </ul>
+      <ul class="item">
+        <li>10:30 am - 12:00 pm</li>
+        <li><b>Google Interview</b></li>
+        <li>Career Center, Los Angeles, CA 90024</li>
+      </ul>
+      <ul class="item">
+        <li>10:30 am - 12:00 pm</li>
+        <li><b>Google Interview</b></li>
+        <li>Career Center, Los Angeles, CA 90024</li>
+      </ul>
+    </div>
   </div>
 </div>
 <script>
@@ -108,12 +140,12 @@
     window.location.href = "/" + path;
   };
 
-  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   var dt = new Date();
-  document.getElementById("time").innerHTML = dt.toLocaleTimeString();
-  document.getElementById("date").innerHTML = dt.toLocaleDateString();
+  document.getElementById("time").innerHTML = dt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  document.getElementById("date-num").innerHTML = dt.toLocaleDateString();
   document.getElementById("header").innerHTML = dt.toLocaleDateString();
-  document.getElementById("day").innerHTML = (dt.toLocaleString(window.navigator.language, {weekday: 'long'})).toUpperCase();
+  document.getElementById("day-long").innerHTML = dt.toLocaleString(window.navigator.language, {weekday: 'long'}).toUpperCase();
+  document.getElementById("day-short").innerHTML = dt.toLocaleString(window.navigator.language, {weekday: 'short'});
 
 </script>
 </body>
