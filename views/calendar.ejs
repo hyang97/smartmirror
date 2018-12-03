@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Calendar</title>
+      <title>Calendar</title>
     </head>
     <style type="text/css">
       body {
@@ -49,6 +49,9 @@
       }
     </style>
 <body>
+
+
+
 <div class="content">
   <div style="display: flex; justify-content: space-between;">
     <div>
@@ -74,26 +77,9 @@
       <span id="day"></span>
       <span id="header"></span>
     </h1>
-    <h1> 
-        In 24 hrs:
-    </h1>
-    <ul class="item">
-      <li>10:30 am - 12:00 pm</li>
-      <li><b>Google Interview</b></li>
-      <li>Career Center, Los Angeles, CA 90024</li>
-    </ul>
-    <ul class="item">
-      <li>10:30 am - 12:00 pm</li>
-      <li><b>Google Interview</b></li>
-      <li>Career Center, Los Angeles, CA 90024</li>
-    </ul>
-    <ul class="item">
-      <li>10:30 am - 12:00 pm</li>
-      <li><b>Google Interview</b></li>
-      <li>Career Center, Los Angeles, CA 90024</li>
-    </ul>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
   var ws = new WebSocket("ws://localhost:40510");
   // event emmited when connected
@@ -115,6 +101,50 @@
   document.getElementById("header").innerHTML = dt.toLocaleDateString();
   document.getElementById("day").innerHTML = (dt.toLocaleString(window.navigator.language, {weekday: 'long'})).toUpperCase();
 
+  var storageItem = localStorage.getItem('events');
+  events = JSON.parse(storageItem);
+  console.log(events);
+  console.log((new Date()).toISOString());
+
+  function appendCalendarItem(message, when, location) { 
+    var text = '<ul class="item"><li>' + when + '</li><li><b>' + message + '</b></li><li>' + location + '</li></ul>';
+    console.log(text);
+    $(".calendar").append(text);
+  }
+
+  if (events.length > 0) {
+    for (i = 0; i < events.length; i++) {
+      var event = events[i];
+      var when = event.start.dateTime;
+      var where = event.location;
+      if (!where){
+        where = "";
+      }
+      if (!when) {
+        when = event.start.date;
+      }
+
+      // Some dirty splits and joins to get the time in correct format
+      time = ((when.split('T')[1]).split('-')[0]).split(':');
+      var hours = Number(time[0]);
+      var minutes = Number(time[1]);
+      var timeValue;
+      if (hours > 0 && hours <= 12) {
+        timeValue= "" + hours;
+      } else if (hours > 12) {
+        timeValue= "" + (hours - 12);
+      } else if (hours == 0) {
+        timeValue= "12";
+      }
+      timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;
+      timeValue += (hours >= 12) ? " P.M." : " A.M.";
+ 
+
+      appendCalendarItem(event.summary, timeValue, where);
+    }
+  } else {
+    appendCalendarItem('No upcoming events found.');
+  }
 </script>
 </body>
 </html>
