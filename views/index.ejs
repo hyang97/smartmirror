@@ -7,6 +7,11 @@
     <title>Smart Mirror</title>
 <!--     <link rel="stylesheet" href="/stylesheets/style.css" /> -->
     <style type="text/css">
+	   :root {
+		--md-txt: 20px;
+		--sm-txt: 15px;
+	  }
+
 	  body {
 	    background-color: black;
 	    margin:0;
@@ -16,33 +21,29 @@
         font-family: sans-serif; 
         font-weight: 200;
         margin: 0;
+        line-height: 1.2;
       }
-
       .content {
         display: flex;
         flex-direction: column; 
         height: 100vh; 
       }
-
       .top {
       	display: flex; 
       	justify-content: space-between; 
       	flex: 1;
       	padding: 50px 60px;
       }
-
       #time {font-size: 35px;}
-      #date {
-      	font-size: 20px;
+      #date span {
+      	font-size: var(--md-txt);
       	font-weight: bold;
-      	margin-bottom: 20px;
       }
       #view-comm {
-      	font-size: 20px;
-      	line-height: 1.2;
+      	font-size: var(--md-txt);
+      	margin-top: 20px;
       }
 	  #title {font-size: 40px;}
-	  .info {font-size: 2rem;}
 	  .info p, .todo-box p {
 	  	margin-bottom: 5px;
 	  }
@@ -60,7 +61,7 @@
     	min-width: 200px;
 	  }
 	  .weather-box p {
-	  	font-size: 15px;
+	  	font-size: var(--sm-txt);
 	  	line-height: 1.5;
 	  }
 	  .weather-box div {
@@ -69,8 +70,13 @@
 	  }
 	  #temp {font-size: 28px;}
 	  .bot {padding: 50px 60px;}
+	  #quote {
+	  	font-size: var(--md-txt);
+	  	margin-bottom: 20px;
+	  	line-height: 1.5;
+	  }
 	  .todo-box {
-	  	font-size: 20px;
+	  	font-size: var(--md-txt);
 	  	padding: 20px 0 20px;
 	  }
 	  .today {
@@ -94,7 +100,7 @@
 	  	border-right: none;
 	  }
 	  .item p:nth-child(3) {
-	  	font-size: 15px;
+	  	font-size: var(--sm-txt);
 	  }
 
 	</style>
@@ -114,14 +120,17 @@
 				<p>0% Rain</p>
 			</div>
 			<div>
-				<div style="display: block; margin: auto;"><img src="d01.svg" style="width: 50px"></div>
+				<div style="display: block; margin: auto;"><img src="/images/index-weather.svg" style="width: 50px"></div>
 				<p id="temp">75°</p>
 		  	</div>
 		</div>
 	  </div>
 	  <div class="info">
 	    <p id="time"></p>
-	    <p id="date"></p>
+	    <span id="date">
+	    	<span id="day-short"></span>
+  			<span id="date-num"></span>
+	    </span>
 	    <p id="view-comm"> 
 	          Say “view commands” <br/>
 	          to see what I can do!
@@ -129,33 +138,34 @@
 	  </div>
 	</div>
 	<div class="bot">
-	<div class="todo-box box">
-		<div class="today">
-			<img src="d02.svg" style="width: 20px; margin-top: 0px; margin-right: 10px;">
-			<span>
-			    <span id="day"></span>
-  				<span id="header"></span>
-			</span>
-		</div>
-		<div class="items">
-			<div class="item">
-				<p><b> 10:30 am </b></p>
-				<p> Yoga Class </p>
-				<p> Core Power </p>
+		<p id="quote"></p>
+		<div class="todo-box box">
+			<div class="today">
+				<img src="/images/index-todo.svg" style="width: 20px; margin-top: 0px; margin-right: 10px;">
+				<span>
+				    <span id="day-long"></span>
+	  				<span id="header"></span>
+				</span>
 			</div>
-			<div class="item">
-				<p><b> 10:30 am </b></p>
-				<p> Yoga Class </p>
-				<p> Core Power </p>
-			</div>
-			<div class="item">
-				<p><b> 10:30 am </b></p>
-				<p> Yoga Class </p>
-				<p> Core Power </p>
+			<div class="items">
+				<div class="item">
+					<p><b> 10:30 am </b></p>
+					<p> Yoga Class </p>
+					<p> Core Power </p>
+				</div>
+				<div class="item">
+					<p><b> 10:30 am </b></p>
+					<p> Yoga Class </p>
+					<p> Core Power </p>
+				</div>
+				<div class="item">
+					<p><b> 10:30 am </b></p>
+					<p> Yoga Class </p>
+					<p> Core Power </p>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
   </div>
   </body>
   <script>
@@ -171,11 +181,24 @@
       const path = ev.data;
       window.location.href = "/" + path;
     };
-	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 	var dt = new Date();
-	document.getElementById("time").innerHTML = dt.toLocaleTimeString();
-	document.getElementById("date").innerHTML = dt.toLocaleDateString();
+	document.getElementById("time").innerHTML = dt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+	document.getElementById("date-num").innerHTML = dt.toLocaleDateString();
 	document.getElementById("header").innerHTML = dt.toLocaleDateString();
-	document.getElementById("day").innerHTML = (dt.toLocaleString(window.navigator.language, {weekday: 'long'})).toUpperCase();
+	document.getElementById("day-long").innerHTML = dt.toLocaleString(window.navigator.language, {weekday: 'long'}).toUpperCase();
+	document.getElementById("day-short").innerHTML = dt.toLocaleString(window.navigator.language, {weekday: 'short'});
+
+	var quotes = [
+	  '"The past cannot be changed. The future is yet in your power." - Unknown',
+	  '"Either I will find a way, or I will make one." - Philip Sydney',
+	  '"Failure will never overtake me if my determination to succeed is strong enough." - Og Mandino',
+	  '"Don’t watch the clock; do what it does. Keep going." — Sam Levenson',
+	  '"Aim for the moon. If you miss, you may hit a star." — W. Clement Stone.',
+	  '"It always seems impossible until its done." - Amelia Earhart',
+	  '"Look up at the stars and not down at your feet. Try to make sense of what you see, and wonder about what makes the universe exist. Be curious." - Stephen Hawking',
+	  '"Believe in yourself! Have faith in your abilities! Without a humble but reasonable confidence in your own powers you cannot be successful or happy." - Norman Vincent Peale', '"You Learn More From Failure Than From Success. Don’t Let It Stop You. Failure Builds Character." – Unknown', '"If You Are Working On Something That You Really Care About, You Don’t Have To Be Pushed. The Vision Pulls You." – Steve Jobs','"We May Encounter Many Defeats But We Must Not Be Defeated." – Maya Angelou', '"One Of The Lessons That I Grew Up With Was To Always Stay True To Yourself And Never Let What Somebody Else Says Distract You From Your Goals." – Michelle Obama', '"Today’s Accomplishments Were Yesterday’s Impossibilities." – Robert H. Schuller', '"The Only Way To Do Great Work Is To Love What You Do. If You Haven’t Found It Yet, Keep Looking. Don’t Settle." – Steve Jobs', '"Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do, so throw off the bowlines, sail away from safe harbor, catch the trade winds in your sails. Explore, Dream, Discover." - Mark Twain', '"Nothing is impossible, the word itself says "I’m possible!" - Audrey Hepburn', '"Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time." - Thomas A. Edison', '"I learned that courage was not the absence of fear, but the triumph over it. The brave man is not he who does not feel afraid, but he who conquers that fear." – Nelson Mandela', '"If you don’t like something, change it. If you can’t change it, change your attitude." – Maya Angelou', '"Success means doing the best we can with what we have. Success is the doing, not the getting; in the trying, not the triumph. Success is a personal standard, reaching for the highest that is in us, becoming all that we can be." – Zig Ziglar', '"You should enjoy the little detours. To the fullest. Because that’s where you’ll find the things more important than what you want." - Ging Freecs' 
+	];
+	document.getElementById("quote").innerHTML = quotes[Math.floor(Math.random()*quotes.length)];
+
   </script>
 </html>
