@@ -18,7 +18,7 @@ const { WEB_SOCKET_PORT, KEYWORDS } = require("./config");
 
 // Start Google assistant stuff
 const child = spawn("python3", [
-  "/home/pi/AIY-projects-python/src/examples/voice/test_bryan.py"
+  "/home/pi/AIY-projects-python/src/examples/voice/test_library.py"
 ]);
 
 console.log("spawned assistant");
